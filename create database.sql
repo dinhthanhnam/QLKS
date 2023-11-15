@@ -29,6 +29,7 @@ CREATE TABLE khachhang (
     ho VARCHAR2(20),
     DIACHI VARCHAR2(50),
     cccd VARCHAR2(15),
+    SODIENTHOAI VARCHAR2(15),
     sothenganhang VARCHAR2(20)
 );
 CREATE TABLE loaiphong (
