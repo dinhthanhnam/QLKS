@@ -44,7 +44,7 @@ CREATE TABLE ctgg (
     ngayketthuc date,
     maloaiphong varchar2(10),
     FOREIGN KEY (maloaiphong) REFERENCES loaiphong(maloaiphong),
-    CHECK (thangbatdau < thangketthuc)
+    CHECK (ngaybatdau < ngayketthuc)
 );
 CREATE TABLE phong (
     maphong varchar2(10) primary key,
