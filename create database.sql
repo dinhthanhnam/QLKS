@@ -86,6 +86,7 @@ CREATE TABLE chitietdichvu (
     machitietdichvu VARCHAR2(20) PRIMARY key,
     madichvu varchar2(10),
     madatphong VARCHAR2(10),
+    soluong int,
     FOREIGN KEY (madichvu) REFERENCEs dichvu(madichvu),
     FOREIGN KEY (madatphong) REFERENCES datphong(madatphong)
 );
