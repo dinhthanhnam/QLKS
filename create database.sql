@@ -34,17 +34,17 @@ CREATE TABLE khachhang (
 );
 CREATE TABLE loaiphong (
     maloaiphong VARCHAR2(10) primary KEY,
-    loaiphong varchar2(10),
+    loaiphong varchar2(20),
     gia int
 );
 CREATE TABLE ctgg (
     mactgg varchar2(10) PRIMARY KEY,
     tiletrietkhau int check (tiletrietkhau >= 1 and tiletrietkhau <= 100),
-    thangbatdau int check (thangbatdau >= 1 and thangbatdau <= 12),
-    thangketthuc int check (thangketthuc >= 1 and thangketthuc <= 12),
+    ngaybatdau date,
+    ngayketthuc date,
     maloaiphong varchar2(10),
     FOREIGN KEY (maloaiphong) REFERENCES loaiphong(maloaiphong),
-    CHECK (thangbatdau < thangketthuc)
+    CHECK (ngaybatdau < ngayketthuc)
 );
 CREATE TABLE phong (
     maphong varchar2(10) primary key,
