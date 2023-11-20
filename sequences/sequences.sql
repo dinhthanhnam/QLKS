@@ -11,10 +11,6 @@ CREATE SEQUENCE seq_makhachhang
    NOCACHE
    NOCYCLE;
 
-ALTER SEQUENCE seq_makhachhang restart;
-
-INSERT INTO KHACHHANG (MAKHACHHANG, TEN, HO, CCCD, DIACHI, SODIENTHOAI, SOTHENGANHANG)
-VALUES ('KH' || LPAD(seq_makhachhang.NEXTVAL, 5, '0'), 'Ngan', 'Ha', 036032131414, 'So 12, Chua Boc, Dong Da, Ha Noi', '0213123131', '0841131231231');
 --sinh mã nhân viên
 CREATE SEQUENCE seq_manhanvien
    START WITH 1
@@ -22,7 +18,6 @@ CREATE SEQUENCE seq_manhanvien
    NOCACHE
    NOCYCLE;
 
-ALTER SEQUENCE seq_manhanvien restart;
 --sinh mã phòng
 CREATE SEQUENCE seq_maphong
    START WITH 1
@@ -51,4 +46,10 @@ CREATE SEQUENCE seq_machitietdichvu
    NOCACHE
    NOCYCLE;
 
-
+alter sequence SEQ_MACHITIETPHONG restart;
+alter sequence SEQ_MAKHACHHANG restart;
+alter sequence SEQ_MACHITIETDICHVU restart;
+alter sequence SEQ_MAKHACHSAN restart;
+alter sequence SEQ_MAPHONG restart;
+alter sequence SEQ_MADATPHONG restart;
+alter sequence SEQ_MANHANVIEN restart;

@@ -1,4 +1,4 @@
-
+DESCRIBE NHANVIEN;
 create TABLE khachsan (
     makhachsan VARCHAR2(10) PRIMARY KEY,
     tenkhachsan VARCHAR2(50),
@@ -6,9 +6,9 @@ create TABLE khachsan (
     sodienthoai VARCHAR2(15),
     email VARCHAR2(50),
     website VARCHAR2(50),
-    sotang int,
-    sophong int,
-    danhgia int,
+    sotang NUMBER,
+    sophong NUMBER,
+    danhgia DECIMAL(2,1),
     checkinTime DATE,
     checkoutTime DATE
 );
@@ -19,18 +19,17 @@ CREATE table nhanvien (
     ho varchar2(20),
     chucvu VARCHAR2(20),
     DIACHI VARCHAR2(50),
-    SODIENTHOAI VARCHAR2(15),
+    SODIENTHOAI NUMBER(15) check (SODIENTHOAI > 0),
     FOREIGN KEY (MAKHACHSAN) REFERENCES KHACHSAN(MAKHACHSAN)
 );
-
 CREATE TABLE khachhang (
     makhachhang VARCHAR2(10) PRIMARY KEY,
     ten VARCHAR2(10),
     ho VARCHAR2(20),
     DIACHI VARCHAR2(50),
-    cccd VARCHAR2(15),
-    SODIENTHOAI VARCHAR2(15),
-    sothenganhang VARCHAR2(20)
+    cccd NUMBER(12,0) check (cccd > 0),
+    SODIENTHOAI VARCHAR2(15) check (SODIENTHOAI > 0),
+    sothenganhang VARCHAR2(20) check (SOTHENGANHANG > 0)
 );
 CREATE TABLE loaiphong (
     maloaiphong VARCHAR2(10) primary KEY,
