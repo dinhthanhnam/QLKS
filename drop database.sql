@@ -8,4 +8,3 @@ drop table ctgg;
 drop table loaiphong;
 drop table khachhang;
 drop table nhanvien;
-drop table khachsan;

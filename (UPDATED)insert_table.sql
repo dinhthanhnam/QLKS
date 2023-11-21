@@ -1,35 +1,26 @@
---khachsan
---chưa chứng minh được tính thực dụng của bảng khách sạn ngoài việc có nhiều hơn 1 khách sạn, còn nếu ko thì cũng ko cần thiết lắm
-INSERT INTO KHACHSAN (MAKHACHSAN, TENKHACHSAN, DIACHI, SODIENTHOAI, email, website, SOTANG, SOPHONG, DANHGIA, checkinTime, checkoutTime)
-VALUES ('KS'|| LPAD(seq_makhachhang.NEXTVAL, 2,'0'),'Quantum Horizon Hotel', '310, Nghi Tam, Tay Ho, Ha Noi','0999888999', 'quantumhorizon@gmail.com', 'quantumhorizon.com', 7, 30, 3.5,SYSDATE, SYSDATE);
-INSERT INTO KHACHSAN (MAKHACHSAN, TENKHACHSAN, DIACHI, SODIENTHOAI, email, website, SOTANG, SOPHONG, DANHGIA, checkinTime, checkoutTime)
-VALUES ('KS'|| LPAD(seq_makhachhang.NEXTVAL, 2,'0'),'Midnight Blaze Inn', '50, Xuan Dieu, Tay Ho, Ha Noi','0999000999', 'midnightblazeinn@gmail.com', 'midnightblazeinn.com', 7, 30, 3.5,SYSDATE, SYSDATE);
-
 --nhanvien
-INSERT INTO NHANVIEN (manhanvien, MAKHACHSAN, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'KS01', 'Nam', 'Dinh Thanh','Nhan vien', 'so 66 ngo 28, Tu Lien, Tay Ho, Ha Noi','0382027003');
-INSERT INTO NHANVIEN (manhanvien, MAKHACHSAN, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'KS01', 'Nghia', 'Nguyen The','Gymer', 'abc', '0999999999');
-INSERT INTO NHANVIEN (manhanvien, MAKHACHSAN, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'KS01', 'Hung', 'Nguyen Duy','Nhan vien', 'abc', '0999999999');
-INSERT INTO NHANVIEN (manhanvien, MAKHACHSAN, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'KS01', 'A Khang', 'Tran','Wibu', 'abc', '0999999999');
-INSERT INTO NHANVIEN (manhanvien, MAKHACHSAN, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'KS02', 'Khoi', 'Truong Ngoc Minh','Yeu Chi', 'abc', '0999999999');
-INSERT INTO NHANVIEN (manhanvien, MAKHACHSAN, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'KS02', 'Son', 'Doan Van','Faker', 'abc', '0999999999');
+INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Nam', 'Dinh Thanh','Nhan vien', 'so 66 ngo 28, Tu Lien, Tay Ho, Ha Noi','0382027003');
+INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Nghia', 'Nguyen The','Gymer', 'abc', null);
+INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Hung', 'Nguyen Duy','Nhan vien', 'abc', null);
+INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'A Khang', 'Tran','Wibu', 'abc', null);
+INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Khoi', 'Truong Ngoc Minh','Yeu Chi', 'abc', null);
+INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Son', 'Doan Van','Faker', 'abc', null);
 --khachhang
--- cần bổ sung sau các ràng buộc unique cho các trường như sđt, cccd, số thẻ
+--sinh mã khách hàng
 INSERT INTO KHACHHANG (MAKHACHHANG, TEN, HO, CCCD, DIACHI, SODIENTHOAI, SOTHENGANHANG)
-values ('KH'||LPAD(SEQ_MAKHACHHANG.NEXTVAL, 5, '0'),'Ngan', 'Ha', 036032131414, 'So 12, Chua Boc, Dong Da, Ha Noi', 0213123131, 0841131231231);
+values ('KH'||LPAD(SEQ_MAKHACHHANG.NEXTVAL, 5, '0'),'Ngan', 'Ha', '036032131414', 'So 12, Chua Boc, Dong Da, Ha Noi', '0213122131', '0841131239231231');
 INSERT INTO KHACHHANG (MAKHACHHANG, TEN, HO, CCCD, DIACHI, SODIENTHOAI, SOTHENGANHANG)
-values ('KH'||LPAD(SEQ_MAKHACHHANG.NEXTVAL, 5, '0'),'Anh', 'Nguyen Phuong', 036032134414, 'So 12, Chua Boc, Dong Da, Ha Noi', 0213122131, 0851131231231);
+values ('KH'||LPAD(SEQ_MAKHACHHANG.NEXTVAL, 5, '0'),'Anh', 'Nguyen Phuong', '036032134414', 'So 12, Chua Boc, Dong Da, Ha Noi', '0213922131', '0891131231231231');
 INSERT INTO KHACHHANG (MAKHACHHANG, TEN, HO, CCCD, DIACHI, SODIENTHOAI, SOTHENGANHANG)
-values ('KH'||LPAD(SEQ_MAKHACHHANG.NEXTVAL, 5, '0'),'Chi', 'Nguyen', 036039131414, 'So 12, Chua Boc, Dong Da, Ha Noi', 0213153131, 0844131231231);
-select * FROM KHACHHANG order by MAKHACHHANG;
-alter SEQUENCE SEQ_MAKHACHHANG RESTART;
+values ('KH'||LPAD(SEQ_MAKHACHHANG.NEXTVAL, 5, '0'),'Chi', 'Nguyen', '036039131414', 'So 12, Chua Boc, Dong Da, Ha Noi', '0219153131', '0844931212331231');
+
 --loai phong
-select * from loaiphong;
 INSERT INTO LOAIPHONG (MALOAIPHONG, LOAIPHONG, GIA)
 VALUES ('DON', 'Phong don', 200000);
 INSERT INTO LOAIPHONG (MALOAIPHONG, LOAIPHONG, GIA)
@@ -57,82 +48,80 @@ VALUES ('Valen_VIP_23', 20,'14-feb-2023','15-feb-2023', 'VIP');
 --Phong
 -- phòng cần có thêm trạng thái, dùng trigger, hoặc 1 stored procedure để lưu lại truy vấn tìm các phòng còn trống
 -- tạm thời để phục vụ việc test tính khả thi của csdl thì chưa thêm trạng thái, nhưng nhất định phải có
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'CHUCNANG','KS01', '101');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'CHUCNANG','KS01', '102');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'STAFF','KS01', '103');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON','KS01', '201');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON','KS01', '202');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI','KS01', '203');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI','KS01', '204');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'VIP','KS01', '205');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'SUKIEN','KS01', '301');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'SUKIEN','KS01', '302');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON','KS01', '401');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON','KS01', '402');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI','KS01', '403');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI','KS01', '404');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'VIP','KS01', '405');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON','KS01', '501');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON','KS01', '502');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI','KS01', '503');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI','KS01', '504');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'VIP','KS01', '505');
-INSERT INTO PHONG (maphong, MALOAIPHONG, MAKHACHSAN, SOPHONG)
-VALUES ('KS01_'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'TANGTHUONG','KS01', '601');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'CHUCNANG', '101');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'CHUCNANG', '102');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'STAFF', '103');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON', '201');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON', '202');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI', '203');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI', '204');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'VIP', '205');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'SUKIEN', '301');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'SUKIEN', '302');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON', '401');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON', '402');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI', '403');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI', '404');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'VIP', '405');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON', '501');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DON', '502');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI', '503');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'DOI', '504');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'VIP', '505');
+INSERT INTO PHONG (maphong, MALOAIPHONG, SOPHONG)
+VALUES ('P'||LPAD(seq_maphong.NEXTVAL, 2, '0'), 'TANGTHUONG', '601');
 
 --dichvu
 --note here:
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('DV_VS', 'Dich vu ve sinh', 'KS01', 100000);
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('MS_TP', 'Mat-xa tai phong', 'KS01', 500000);
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('MS', 'Mat-xa', 'KS01', 300000);
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('MS_A_Z', 'Mat-xa tu A_Z', 'KS01', 1000000);
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('GYM', 'Phong Gym', 'KS01', 50000);
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('GYM_PT', 'Gym co PT', 'KS01', 200000);
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('POOL', 'Be boi', 'KS01', 100000);
-INSERT INTO DICHVU (MADICHVU, TENDICHVU, MAKHACHSAN, GIA)
-VALUES ('POOL_PRI', 'Be boi rieng', 'KS01', 1000000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('DV_VS', 'Dich vu ve sinh', 100000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('MS_TP', 'Mat-xa tai phong', 500000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('MS', 'Mat-xa', 300000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('MS_A_Z', 'Mat-xa tu A_Z', 1000000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('GYM', 'Phong Gym', 50000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('GYM_PT', 'Gym co PT', 200000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('POOL', 'Be boi', 100000);
+INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
+VALUES ('POOL_PRI', 'Be boi rieng', 1000000);
+select * from dichvu;
 --booking
 --cần nhiều trigger: trigger thêm thời gian check in của khách(lập tức), trigger thêm thời gian check out(lập tức), trigger update tổng tiền (hoặc stored procedure, vì tổng tiền cũng ko cần update lập tức)
-INSERT INTO DATPHONG (MADATPHONG, MANHANVIEN, MAKHACHSAN, MAKHACHHANG, NGAYDATPHONG, CHECKINDATE, CHECKOUTDATE, PHUONGTHUCTHANHTOAN, TONGTIEN)
-VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV001', 'KS01', 'KH00001', '16-nov-2023', '18-nov-2023', '20-nov-2023' , 'Cash', 0);
-
-INSERT INTO DATPHONG (MADATPHONG, MANHANVIEN, MAKHACHSAN, MAKHACHHANG, NGAYDATPHONG, CHECKINDATE, CHECKOUTDATE, PHUONGTHUCTHANHTOAN, TONGTIEN)
-VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV002', 'KS01', 'KH00002', '17-nov-2023', '19-nov-2023', '22-nov-2023', 'Credit Card', 0);
-
+INSERT INTO DATPHONG (MADATPHONG, MANHANVIEN, MAKHACHHANG, NGAYDATPHONG, CHECKINDATE, CHECKOUTDATE, PHUONGTHUCTHANHTOAN, coc, TONGTIEN)
+VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV0001', 'KH00001', '16-nov-2023', '18-nov-2023', '20-nov-2023' , 'cash', 100000, 0);
+INSERT INTO DATPHONG (MADATPHONG, MANHANVIEN, MAKHACHHANG, NGAYDATPHONG, CHECKINDATE, CHECKOUTDATE, PHUONGTHUCTHANHTOAN, coc, TONGTIEN)
+VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV0002', 'KH00002', '17-nov-2023', '19-nov-2023', '22-nov-2023', 'card', 500000, 0);
 --chitietphong
 INSERT INTO CHITIETPHONG (MACHITIETPHONG,MADATPHONG, MAPHONG)
-VALUES ('CTPH'||LPAD(seq_machitietphong.NEXTVAL, 5, '0'),'DP00001','KS01_05');
+VALUES ('CTPH'||LPAD(seq_machitietphong.NEXTVAL, 5, '0'),'DP00001','P05');
 INSERT INTO CHITIETPHONG (MACHITIETPHONG,MADATPHONG, MAPHONG)
-VALUES ('CTPH'||LPAD(seq_machitietphong.NEXTVAL, 5, '0'),'DP00002','KS01_08');
---chitietdichvu: lẽ ra nên có thêm số lượng, Maybe?
-
+VALUES ('CTPH'||LPAD(seq_machitietphong.NEXTVAL, 5, '0'),'DP00002','P08');
+--chitietdichvu:
 INSERT INTO CHITIETDICHVU (MACHITIETDICHVU, MADATPHONG, MADICHVU, soluong)
 VALUES ('CTDV'||LPAD(seq_machitietdichvu.NEXTVAL, 5, '0'),'DP00001','DV_VS', 1);
 INSERT INTO CHITIETDICHVU (MACHITIETDICHVU, MADATPHONG, MADICHVU, soluong)
@@ -141,14 +130,9 @@ INSERT INTO CHITIETDICHVU (MACHITIETDICHVU, MADATPHONG, MADICHVU, soluong)
 VALUES ('CTDV'||LPAD(seq_machitietdichvu.NEXTVAL, 5, '0'),'DP00001','MS', 2);
 INSERT INTO CHITIETDICHVU (MACHITIETDICHVU, MADATPHONG, MADICHVU, soluong)
 VALUES ('CTDV'||LPAD(seq_machitietdichvu.NEXTVAL, 5, '0'),'DP00001','POOL', 2);
-
 INSERT INTO CHITIETDICHVU (MACHITIETDICHVU, MADATPHONG, MADICHVU, soluong)
 VALUES ('CTDV'||LPAD(seq_machitietdichvu.NEXTVAL, 5, '0'),'DP00002','DV_VS', 1);
 INSERT INTO CHITIETDICHVU (MACHITIETDICHVU, MADATPHONG, MADICHVU, soluong)
 VALUES ('CTDV'||LPAD(seq_machitietdichvu.NEXTVAL, 5, '0'),'DP00002','GYM', 2);
 INSERT INTO CHITIETDICHVU (MACHITIETDICHVU, MADATPHONG, MADICHVU, soluong)
 VALUES ('CTDV'||LPAD(seq_machitietdichvu.NEXTVAL, 5, '0'),'DP00002','MS', 2);
-
-
-
-

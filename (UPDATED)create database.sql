@@ -1,44 +1,32 @@
-DESCRIBE NHANVIEN;
-create TABLE khachsan (
-    makhachsan VARCHAR2(10) PRIMARY KEY,
-    tenkhachsan VARCHAR2(50),
-    diachi VARCHAR2(50),
-    sodienthoai VARCHAR2(15),
-    email VARCHAR2(50),
-    website VARCHAR2(50),
-    sotang NUMBER,
-    sophong NUMBER,
-    danhgia DECIMAL(2,1),
-    checkinTime DATE,
-    checkoutTime DATE
-);
 CREATE table nhanvien (
     manhanvien VARCHAR2(10) primary key,
-    MAKHACHSAN VARCHAR2(10),
     ten VARCHAR2(10),
     ho varchar2(20),
     chucvu VARCHAR2(20),
     DIACHI VARCHAR2(50),
-    SODIENTHOAI NUMBER(15) check (SODIENTHOAI > 0),
-    FOREIGN KEY (MAKHACHSAN) REFERENCES KHACHSAN(MAKHACHSAN)
+    SODIENTHOAI VARCHAR2(15) check (REGEXP_LIKE(SODIENTHOAI, '^[0-9]+$')),
+    CONSTRAINT unique_sodienthoai UNIQUE (SODIENTHOAI)
 );
 CREATE TABLE khachhang (
     makhachhang VARCHAR2(10) PRIMARY KEY,
     ten VARCHAR2(10),
     ho VARCHAR2(20),
     DIACHI VARCHAR2(50),
-    cccd NUMBER(12,0) check (cccd > 0),
-    SODIENTHOAI VARCHAR2(15) check (SODIENTHOAI > 0),
-    sothenganhang VARCHAR2(20) check (SOTHENGANHANG > 0)
+    cccd VARCHAR2(12) check (REGEXP_LIKE(cccd, '^[0-9]+$') and LENGTH(cccd) = 12),
+    SODIENTHOAI VARCHAR2(15) check (REGEXP_LIKE(SODIENTHOAI, '^[0-9]+$')),
+    sothenganhang VARCHAR2(20) check (REGEXP_LIKE(SOTHENGANHANG, '^[0-9]+$')),
+    CONSTRAINT unique_card UNIQUE (SOTHENGANHANG),
+    CONSTRAINT unique_cccd UNIQUE (CCCD),
+    CONSTRAINT unique_sdtkhach UNIQUE (SODIENTHOAI)
 );
 CREATE TABLE loaiphong (
     maloaiphong VARCHAR2(10) primary KEY,
     loaiphong varchar2(20),
-    gia int
+    gia NUMBER
 );
 CREATE TABLE ctgg (
     mactgg varchar2(10) PRIMARY KEY,
-    tiletrietkhau int check (tiletrietkhau >= 1 and tiletrietkhau <= 100),
+    tiletrietkhau NUMBER check (tiletrietkhau >= 0 and tiletrietkhau <= 100),
     ngaybatdau date,
     ngayketthuc date,
     maloaiphong varchar2(10),
@@ -50,28 +38,26 @@ CREATE TABLE phong (
     maloaiphong VARCHAR2(10),
     makhachsan VARCHAR2(10),
     sophong varchar2(10),
-    FOREIGN KEY (maloaiphong) REFERENCES loaiphong(maloaiphong),
-    FOREIGN KEY (MAKHACHSAN) REFERENCES KHACHSAN(MAKHACHSAN)
+    FOREIGN KEY (maloaiphong) REFERENCES loaiphong(maloaiphong)
 );
 create table dichvu (
     madichvu varchar2(10) primary key,
-    MAKHACHSAN varchar2(10),
     tendichvu VARCHAR2(20),
-    gia int,
-    FOREIGN KEY (MAKHACHSAN) REFERENCES KHACHSAN(MAKHACHSAN)
+    gia NUMBER
 );
+
 CREATE TABLE datphong (
     madatphong varchar2(10) PRIMARY KEY,
     manhanvien VARCHAR2(10),
-    MAKHACHSAN VARCHAR2(10),
     makhachhang varchar2(10),
     ngaydatphong DATE,
+    songayo NUMBER,
     checkindate DATE,
     checkoutdate DATE,
-    phuongthucthanhtoan VARCHAR2(20),
-    tongtien int,
+    phuongthucthanhtoan VARCHAR2(20) CHECK (phuongthucthanhtoan IN ('card', 'cash', 'transfer')),
+    coc NUMBER,
+    tongtien FLOAT,
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien),
-    FOREIGN KEY (MAKHACHSAN) REFERENCES KHACHSAN(MAKHACHSAN),
     FOREIGN KEY (makhachhang) REFERENCES khachhang(makhachhang)
 );
 create TABLE chitietphong (
@@ -85,7 +71,8 @@ CREATE TABLE chitietdichvu (
     machitietdichvu VARCHAR2(20) PRIMARY key,
     madichvu varchar2(10),
     madatphong VARCHAR2(10),
-    soluong int,
+    soluong NUMBER,
     FOREIGN KEY (madichvu) REFERENCEs dichvu(madichvu),
     FOREIGN KEY (madatphong) REFERENCES datphong(madatphong)
 );
+
