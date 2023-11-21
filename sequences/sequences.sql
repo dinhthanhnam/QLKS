@@ -1,10 +1,4 @@
 --sinh mã khách hàng
-CREATE SEQUENCE seq_makhachsan
-    START WITH 1
-    increment BY 1
-    NOCACHE
-    NOCYCLE;
-
 CREATE SEQUENCE seq_makhachhang
    START WITH 1
    INCREMENT BY 1
@@ -49,7 +43,6 @@ CREATE SEQUENCE seq_machitietdichvu
 alter sequence SEQ_MACHITIETPHONG restart;
 alter sequence SEQ_MAKHACHHANG restart;
 alter sequence SEQ_MACHITIETDICHVU restart;
-alter sequence SEQ_MAKHACHSAN restart;
 alter sequence SEQ_MAPHONG restart;
 alter sequence SEQ_MADATPHONG restart;
 alter sequence SEQ_MANHANVIEN restart;

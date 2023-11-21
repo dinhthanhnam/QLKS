@@ -1,9 +1,4 @@
-select * FROM KHACHSAN;
-SELECT * FROM CHITIETDICHVU;
-SELECT * FROM DATPHONG;
-SELECT * FROM KHACHHANG;
-SELECT * FROM CTGG;
-
+---thong tin phong (hoàn thiện)
 CREATE OR REPLACE VIEW ThongTinPhong AS
 SELECT 
     p.maphong,
@@ -16,5 +11,17 @@ FROM phong p
 JOIN loaiphong lp ON p.maloaiphong = lp.maloaiphong
 LEFT JOIN ctgg ON lp.maloaiphong = ctgg.maloaiphong
                AND SYSDATE BETWEEN ctgg.ngaybatdau AND ctgg.ngayketthuc
-order by LOAIPHONG;
-SELECT * from THONGTINPHONG;
+order by MAPHONG;
+
+select * FROM THONGTINPHONG;
+
+--phòng còn trống tại thời điểm hiện tại (chưa hoàn thiện)
+CREATE OR REPLACE VIEW PhongTrongView AS
+SELECT *
+FROM ThongTinPhong
+WHERE maphong NOT IN (
+    SELECT maphong
+    FROM chitietphong ctp
+    JOIN datphong dp ON ctp.madatphong = dp.madatphong
+    WHERE dp.checkoutdate >= SYSDATE
+);

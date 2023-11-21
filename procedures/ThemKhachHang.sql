@@ -3,7 +3,8 @@ CREATE OR REPLACE PROCEDURE ThemKhachHang(
     p_ho VARCHAR2,
     p_sodienthoai NUMBER,
     p_cccd NUMBER,
-    p_diachi VARCHAR2
+    p_diachi VARCHAR2,
+    p_sothenganhang VARCHAR2
 ) IS
 BEGIN
     INSERT INTO KHACHHANG (
@@ -12,14 +13,16 @@ BEGIN
             HO,
             SODIENTHOAI,
             CCCD,
-            DIACHI  
+            DIACHI,
+            SOTHENGANHANG
         ) VALUES (
             'KH' || LPAD(seq_makhachhang.NEXTVAL, 5, '0'),
             p_ten,
             p_ho,
             p_sodienthoai,
             p_cccd,
-            p_diachi
+            p_diachi,
+            p_sothenganhang
         );
 
         COMMIT;
@@ -28,15 +31,14 @@ END ThemKhachHang;
 /
 
 BEGIN
-    ThemKhachHang('&p_ten', '&p_ho', '&p_sodienthoai', '&p_cccd', '&p_diachi');
+    ThemKhachHang('&p_ten', '&p_ho', '&p_sodienthoai', '&p_cccd', '&p_diachi', '&p_sothenganhang');
 END;
 /
 
-INSERT INTO KHACHHANG (MAKHACHHANG, TEN, HO, CCCD, DIACHI, SODIENTHOAI, SOTHENGANHANG)
-values ('KH'||LPAD(seq_makhachhang.NEXTVAL, 5, '0'),'Ngan', 'Ha', 036032131414, 'So 12, Chua Boc, Dong Da, Ha Noi', 0213123131, 0841131231231123);
 
 SHOW errors;
-
+SELECT SEQ_MAKHACHHANG.NEXTVAL FROM dual; 
+ALTER SEQUENCE seq_makhachhang INCREMENT by 1;
 ALTER SEQUENCE seq_makhachhang restart;
 select * from khachhang;
 DELETE FROM KHACHHANG;
