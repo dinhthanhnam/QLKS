@@ -36,7 +36,6 @@ CREATE TABLE ctgg (
 CREATE TABLE phong (
     maphong varchar2(10) primary key,
     maloaiphong VARCHAR2(10),
-    makhachsan VARCHAR2(10),
     sophong varchar2(10),
     FOREIGN KEY (maloaiphong) REFERENCES loaiphong(maloaiphong)
 );
