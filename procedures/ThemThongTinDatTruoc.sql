@@ -14,26 +14,26 @@ CREATE OR REPLACE PROCEDURE ThemThongTinKhachDatTruoc(
 BEGIN
         ThemKhachHang(p_ten, p_ho, p_sodienthoai, p_cccd, null, null);
         SELECT MAKHACHHANG INTO v_makhachhang
-        FROM KHACHHANG
-        order by MAKHACHHANG desc
-        FETCH FIRST 1 row ONLY;
+            FROM KHACHHANG
+            order by MAKHACHHANG desc
+            FETCH FIRST 1 row ONLY;
         ThemDatPhong(p_manhanvien, v_makhachhang, p_songayo, p_CHECKINDATE);
-        SELECT madatphong INTO v_madatphong
-        FROM datphong
-        order by madatphong desc
-        FETCH FIRST 1 row ONLY;
+            SELECT madatphong INTO v_madatphong
+            FROM datphong
+            order by madatphong desc
+            FETCH FIRST 1 row ONLY;
         INSERT INTO chitietphong(machitietphong, madatphong, maphong)
         VALUES ('CTPH'||LPAD(seq_machitietphong.NEXTVAL, 5, '0'), v_madatphong, p_maphong);
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('Bản ghi khách đặt trước đã được thêm thành công.');
         
         SELECT giaphong INTO v_giaphong
-        FROM ThongTinPhong
-        WHERE maphong = p_maphong
-        FETCH FIRST 1 ROW ONLY;
+            FROM ThongTinPhong
+            WHERE maphong = p_maphong
+            FETCH FIRST 1 ROW ONLY;
         UPDATE DATPHONG
-        set coc = v_giaphong/2
-        WHERE MADATPHONG = v_madatphong;
+            set coc = v_giaphong/2
+            WHERE MADATPHONG = v_madatphong;
 END ThemThongTinKhachDatTruoc;
 /
 SHOW errors;
@@ -46,7 +46,8 @@ BEGIN
         '&p_ho',
         '&p_sodienthoai',
         '&p_cccd',
+        '&p_maphong',
         '&p_CHECKINDATE',
         '&p_songayo'
-    )
+    );
 end;
