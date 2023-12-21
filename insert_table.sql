@@ -1,16 +1,16 @@
 --nhanvien
 INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Nam', 'Dinh Thanh','Nhan vien', 'so 66 ngo 28, Tu Lien, Tay Ho, Ha Noi','0382027003');
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Nam', 'Dinh Thanh','Thu ngan', 'so 66 ngo 28, Tu Lien, Tay Ho, Ha Noi','0382027003');
 INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Nghia', 'Nguyen The','Gymer', 'abc', null);
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Nghia', 'Nguyen The','Thu ngan', 'abc', '0872027403');
 INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Hung', 'Nguyen Duy','Nhan vien', 'abc', null);
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Hung', 'Nguyen Duy','Thu ngan', 'abc', '0652024563');
 INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'A Khang', 'Tran','Wibu', 'abc', null);
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'A Khang', 'Tran','Thu ngan', 'abc', '0323023353'l);
 INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Khoi', 'Truong Ngoc Minh','Yeu Chi', 'abc', null);
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Khoi', 'Truong Ngoc Minh','Thu ngan', 'abc', '0766443353');
 INSERT INTO NHANVIEN (manhanvien, ten, ho, CHUCVU, DIACHI, SODIENTHOAI)
-values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Son', 'Doan Van','Faker', 'abc', null);
+values ('NV'||LPAD(seq_manhanvien.NEXTVAL, 4, '0'), 'Son', 'Doan Van','Thu ngan', 'abc', '0896157137');
 --khachhang
 --sinh mã khách hàng
 INSERT INTO KHACHHANG (MAKHACHHANG, TEN, HO, CCCD, DIACHI, SODIENTHOAI, SOTHENGANHANG)
@@ -45,6 +45,21 @@ INSERT INTO CTGG ( mactgg, TILETRIETKHAU, ngaybatdau, ngayketthuc, MALOAIPHONG)
 VALUES ('NNN_VIP_23', 10, '1-nov-2023', '30-nov-2023','VIP');
 INSERT INTO CTGG ( MACTGG, TILETRIETKHAU, NGAYBATDAU, NGAYKETTHUC, MALOAIPHONG)
 VALUES ('Valen_VIP_23', 20,'14-feb-2023','15-feb-2023', 'VIP');
+
+INSERT INTO CTGG ( MACTGG, TILETRIETKHAU, NGAYBATDAU, NGAYKETTHUC, MALOAIPHONG)
+VALUES ('Noel_23', 20,'25-dec-2023','31-dec-2023', 'DOI');
+INSERT INTO CTGG ( MACTGG, TILETRIETKHAU, NGAYBATDAU, NGAYKETTHUC, MALOAIPHONG)
+VALUES ('Noel_23', 20,'25-dec-2023','31-dec-2023', 'DON');
+INSERT INTO CTGG ( MACTGG, TILETRIETKHAU, NGAYBATDAU, NGAYKETTHUC, MALOAIPHONG)
+VALUES ('Noel_23', 20,'25-dec-2023','31-dec-2023', 'VIP');
+
+INSERT INTO CTGG ( MACTGG, TILETRIETKHAU, NGAYBATDAU, NGAYKETTHUC, MALOAIPHONG)
+VALUES ('NY_24', 20,'1-jan-2024','3-jan-2023', 'DOI');
+INSERT INTO CTGG ( MACTGG, TILETRIETKHAU, NGAYBATDAU, NGAYKETTHUC, MALOAIPHONG)
+VALUES ('NY_24', 20,'1-jan-2024','3-jan-2023', 'DON');
+INSERT INTO CTGG ( MACTGG, TILETRIETKHAU, NGAYBATDAU, NGAYKETTHUC, MALOAIPHONG)
+VALUES ('NY_24', 20,'1-jan-2024','3-jan-2023', 'VIP');
+
 --Phong
 -- phòng cần có thêm trạng thái, dùng trigger, hoặc 1 stored procedure để lưu lại truy vấn tìm các phòng còn trống
 -- tạm thời để phục vụ việc test tính khả thi của csdl thì chưa thêm trạng thái, nhưng nhất định phải có
@@ -111,11 +126,11 @@ INSERT INTO DICHVU (MADICHVU, TENDICHVU, GIA)
 VALUES ('POOL_PRI', 'Be boi rieng', 1000000);
 select * from dichvu;
 --booking
---cần nhiều trigger: trigger thêm thời gian check in của khách(lập tức), trigger thêm thời gian check out(lập tức), trigger update tổng tiền (hoặc stored procedure, vì tổng tiền cũng ko cần update lập tức)
+
 INSERT INTO DATPHONG (MADATPHONG, MANHANVIEN, MAKHACHHANG, NGAYDATPHONG, CHECKINDATE, CHECKOUTDATE, PHUONGTHUCTHANHTOAN, coc, TONGTIEN)
-VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV0001', 'KH00001', '16-nov-2023', '18-nov-2023', '20-nov-2023' , 'cash', 100000, 0);
+VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV0001', 'KH00001', '16-dec-2023', '18-dec-2023', '20-dec-2023' , 'cash', 100000, 0);
 INSERT INTO DATPHONG (MADATPHONG, MANHANVIEN, MAKHACHHANG, NGAYDATPHONG, CHECKINDATE, CHECKOUTDATE, PHUONGTHUCTHANHTOAN, coc, TONGTIEN)
-VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV0002', 'KH00002', '17-nov-2023', '19-nov-2023', '22-nov-2023', 'card', 500000, 0);
+VALUES ('DP'||LPAD(seq_madatphong.NEXTVAL, 5, '0'), 'NV0002', 'KH00002', '17-dec-2023', '19-dec-2023', '22-dec-2023', 'card', 500000, 0);
 --chitietphong
 INSERT INTO CHITIETPHONG (MACHITIETPHONG,MADATPHONG, MAPHONG)
 VALUES ('CTPH'||LPAD(seq_machitietphong.NEXTVAL, 5, '0'),'DP00001','P05');
