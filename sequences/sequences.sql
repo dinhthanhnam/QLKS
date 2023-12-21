@@ -40,9 +40,16 @@ CREATE SEQUENCE seq_machitietdichvu
    NOCACHE
    NOCYCLE;
 
+CREATE SEQUENCE seq_mahoadon
+   START WITH 1
+   INCREMENT BY 1
+   NOCACHE
+   NOCYCLE;
+
 alter sequence SEQ_MACHITIETPHONG restart;
 alter sequence SEQ_MAKHACHHANG restart;
 alter sequence SEQ_MACHITIETDICHVU restart;
 alter sequence SEQ_MAPHONG restart;
 alter sequence SEQ_MADATPHONG restart;
 alter sequence SEQ_MANHANVIEN restart;
+alter sequence seq_mahoadon restart;

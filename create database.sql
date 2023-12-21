@@ -25,7 +25,7 @@ CREATE TABLE loaiphong (
     gia NUMBER
 );
 CREATE TABLE ctgg (
-    mactgg varchar2(10) PRIMARY KEY,
+    mactgg varchar2(20) PRIMARY KEY,
     tiletrietkhau NUMBER check (tiletrietkhau >= 0 and tiletrietkhau <= 100),
     ngaybatdau date,
     ngayketthuc date,
@@ -74,4 +74,3 @@ CREATE TABLE chitietdichvu (
     FOREIGN KEY (madichvu) REFERENCEs dichvu(madichvu),
     FOREIGN KEY (madatphong) REFERENCES datphong(madatphong)
 );
-

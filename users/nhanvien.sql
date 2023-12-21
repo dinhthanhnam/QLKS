@@ -1,0 +1,37 @@
+-- T?o profile nhanvien
+SELECT * FROM DBA_PROFILES;
+
+
+CREATE ROLE C##NhanVien;
+GRANT CONNECT, RESOURCE TO C##nhanvien;
+
+GRANT SELECT ON C##QLKS.NHANVIEN TO C##nhanvien;
+GRANT SELECT ON C##QLKS.LOAIPHONG TO C##nhanvien;
+GRANT SELECT ON C##QLKS.CTGG TO C##nhanvien;
+GRANT SELECT ON C##QLKS.PHONG TO C##nhanvien;
+GRANT SELECT ON C##QLKS.DICHVU TO C##nhanvien;
+GRANT SELECT, INSERT, UPDATE ON C##QLKS.KHACHHANG TO C##nhanvien;
+GRANT SELECT, INSERT, UPDATE, DELETE ON C##QLKS.DATPHONG TO C##nhanvien;
+GRANT SELECT, INSERT, UPDATE, DELETE ON C##QLKS.CHITIETPHONG TO C##nhanvien;
+GRANT SELECT, INSERT, UPDATE, DELETE ON C##QLKS.CHITIETDICHVU TO C##nhanvien;
+
+CREATE OR REPLACE PROCEDURE TaoTKNhanVien(
+    p_username IN VARCHAR2,
+    p_password IN VARCHAR2
+)
+IS
+BEGIN
+    EXECUTE IMMEDIATE 'CREATE USER ' || p_username || ' IDENTIFIED BY ' || p_password;
+    EXECUTE IMMEDIATE 'GRANT C##nhanvien TO ' || p_username;
+    COMMIT;
+END TaoTKNhanVIen;
+/
+
+Begin
+    TaoTKNhanVien('C##hung','hung123');
+end;
+/
+
+create user C##nam identified by nam123;
+GRANT C##NhanVien TO C##nam;
+

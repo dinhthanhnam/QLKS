@@ -31,15 +31,9 @@ BEGIN
         );
 
         COMMIT;
-        DBMS_OUTPUT.PUT_LINE('B?n ghi ??t phòng ?ã ???c thêm thành công.');
+        DBMS_OUTPUT.PUT_LINE('Bản ghi đã được thêm thành công.');
 END ThemDatPhong;
 /
 BEGIN
     ThemDatPhong('NV0004', 'KH00001', 1, '26-nov-2023');
 END;
-DESCRIBE datphong;
-show errors;
-
-SELECT SEQ_MADATPHONG.NEXTVAL FROM dual;
-
-select * from datphong;

@@ -1,8 +1,8 @@
 CREATE OR REPLACE PROCEDURE ThemKhachHang(
     p_ten VARCHAR2,
     p_ho VARCHAR2,
-    p_sodienthoai NUMBER,
-    p_cccd NUMBER,
+    p_sodienthoai VARCHAR2,
+    p_cccd VARCHAR2,
     p_diachi VARCHAR2,
     p_sothenganhang VARCHAR2
 ) IS
@@ -36,10 +36,3 @@ END;
 /
 
 
-SHOW errors;
-SELECT SEQ_MAKHACHHANG.NEXTVAL FROM dual; 
-ALTER SEQUENCE seq_makhachhang INCREMENT by 1;
-ALTER SEQUENCE seq_makhachhang restart;
-select * from khachhang;
-DELETE FROM KHACHHANG;
-DESCRIBE KHACHHANG;
