@@ -606,7 +606,7 @@ BEGIN
     FROM phong p
     JOIN loaiphong lp ON p.maloaiphong = lp.maloaiphong
     LEFT JOIN ctgg ON lp.maloaiphong = ctgg.maloaiphong
-                   AND extract(month from SYSDATE) BETWEEN extract(month from ctgg.ngaybatdau) AND extract(month from ctgg.ngayketthuc)
+                   AND SYSDATE BETWEEN ctgg.ngaybatdau AND ctgg.ngayketthuc
     WHERE p.maphong IN (SELECT maphong FROM chitietphong WHERE madatphong = p_madatphong);
 
     -- Cộng thêm giá dịch vụ
