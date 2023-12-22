@@ -1,5 +1,6 @@
 
 create TABLE hoadon(
+    MAHOADON varchar2(20),
     makhachhang VARCHAR2(20),
     tenkhachhang VARCHAR(20),
     hokhachhang varchar(20),

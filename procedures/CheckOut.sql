@@ -1,4 +1,5 @@
 CREATE OR REPLACE PROCEDURE CheckOut(p_madatphong VARCHAR2, p_phuongthucthanhtoan VARCHAR2) IS
+    v_mahoadon VARCHAR2;
     cur_row ThongTinKhachHang%ROWTYPE;
     CURSOR cur_ThongTinKhachHang IS
         SELECT *
@@ -12,6 +13,8 @@ BEGIN
     SET phuongthucthanhtoan = lower(p_phuongthucthanhtoan)
     WHERE madatphong = p_madatphong;
 
+    v_mahoadon := seq_mahoadon.nextval;
+
     OPEN cur_ThongTinKhachHang;
     
     -- Lặp qua tất cả các hàng
@@ -19,6 +22,7 @@ BEGIN
     LOOP
         -- Chèn thông tin vào bảng hoadon cho mỗi hàng
         INSERT INTO hoadon VALUES (
+            v_mahoadon,
             cur_row.makhachhang,
             cur_row.tenkhachhang,
             cur_row.hokhachhang,
