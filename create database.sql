@@ -53,7 +53,7 @@ CREATE TABLE datphong (
     songayo NUMBER,
     checkindate DATE,
     checkoutdate DATE,
-    phuongthucthanhtoan VARCHAR2(20) CHECK (phuongthucthanhtoan IN ('card', 'cash', 'transfer')),
+    phuongthucthanhtoan VARCHAR2(20) CHECK (phuongthucthanhtoan IN ('card', 'cash', 'transfer','CASH', 'CARD', 'TRANSFER')),
     coc NUMBER,
     tongtien FLOAT,
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien),
