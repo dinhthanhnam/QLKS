@@ -1,6 +1,3 @@
--- T?o profile nhanvien
-SELECT * FROM DBA_PROFILES;
-
 
 CREATE ROLE C##NhanVien;
 GRANT CONNECT, RESOURCE TO C##nhanvien;
@@ -14,24 +11,21 @@ GRANT SELECT, INSERT, UPDATE ON C##QLKS.KHACHHANG TO C##nhanvien;
 GRANT SELECT, INSERT, UPDATE, DELETE ON C##QLKS.DATPHONG TO C##nhanvien;
 GRANT SELECT, INSERT, UPDATE, DELETE ON C##QLKS.CHITIETPHONG TO C##nhanvien;
 GRANT SELECT, INSERT, UPDATE, DELETE ON C##QLKS.CHITIETDICHVU TO C##nhanvien;
+GRANT SELECT ON C##QLKS.KhachChuaDen TO C##nhanvien;
+GRANT SELECT ON C##QLKS.KhachDangO TO C##nhanvien;
+GRANT SELECT ON C##QLKS.ThongTinKhachHang TO C##nhanvien;
+GRANT SELECT ON C##QLKS.ThongTinPhong TO C##nhanvien;
+GRANT SELECT ON C##QLKS.ViewPhongTrong TO C##nhanvien;
 
-CREATE OR REPLACE PROCEDURE TaoTKNhanVien(
-    p_username IN VARCHAR2,
-    p_password IN VARCHAR2
-)
-IS
-BEGIN
-    EXECUTE IMMEDIATE 'CREATE USER ' || p_username || ' IDENTIFIED BY ' || p_password;
-    EXECUTE IMMEDIATE 'GRANT C##nhanvien TO ' || p_username;
-    COMMIT;
-END TaoTKNhanVIen;
-/
+GRANT EXECUTE ON C##QLKS.CheckOut TO C##nhanvien;
+GRANT EXECUTE ON C##QLKS.ThemDatPhong TO C##nhanvien;
+GRANT EXECUTE ON C##QLKS.ThemKhachHang TO C##nhanvien;
+GRANT EXECUTE ON C##QLKS.ThemNhanVien TO C##nhanvien;
+GRANT EXECUTE ON C##QLKS.ThemThongTinKhachDatTruoc TO C##nhanvien;
+GRANT EXECUTE ON C##QLKS.ThemThongTinTaiQuay TO C##nhanvien;
+GRANT EXECUTE ON C##QLKS.UpdateTongTien TO C##nhanvien;
 
-Begin
-    TaoTKNhanVien('C##hung','hung123');
-end;
-/
 
-create user C##nam identified by nam123;
-GRANT C##NhanVien TO C##nam;
+create user C##NV identified by midnightheaven;
+GRANT C##NhanVien TO C##NV;
 
