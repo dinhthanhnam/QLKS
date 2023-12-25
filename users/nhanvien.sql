@@ -1,6 +1,7 @@
 
-CREATE ROLE C##NhanVien;
+CREATE ROLE C##nhanvien;
 GRANT CONNECT, RESOURCE TO C##nhanvien;
+GRANT create session to C##nhanvien;
 
 GRANT SELECT ON C##QLKS.NHANVIEN TO C##nhanvien;
 GRANT SELECT ON C##QLKS.LOAIPHONG TO C##nhanvien;
@@ -27,5 +28,5 @@ GRANT EXECUTE ON C##QLKS.UpdateTongTien TO C##nhanvien;
 
 
 create user C##NV identified by midnightheaven;
-GRANT C##NhanVien TO C##NV;
+GRANT C##nhanvien TO C##NV;
 

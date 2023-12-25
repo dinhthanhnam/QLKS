@@ -711,13 +711,13 @@ BEGIN
         -- Chèn thông tin vào bảng hoadon cho mỗi hàng
         INSERT INTO hoadon (
             mahoadon,
+            MADATPHONG,
             makhachhang,
             tenkhachhang,
             hokhachhang,
             diachikhachhang,
             cccd,
             SODIENTHOAIKHACHHANG,
-            MADATPHONG,
             ngaydatphong,
             songayo,
             checkindate,
@@ -733,13 +733,13 @@ BEGIN
         )
         VALUES (
             'HD'||LPAD(SEQ_MAHOADON.NEXTVAL, 5, '0'),
+            cur_row.madatphong,
             cur_row.makhachhang,
             cur_row.tenkhachhang,
             cur_row.hokhachhang,
             cur_row.diachikhachhang,
             cur_row.cccd,
             cur_row.sodienthoaikhachhang,
-            cur_row.madatphong,
             cur_row.ngaydatphong,
             cur_row.songayo,
             cur_row.checkindate,
