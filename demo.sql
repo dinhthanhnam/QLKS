@@ -400,6 +400,7 @@ END;
 
 SELECT * from datphong;
 
+
 --them thong tin tai quay 
 CREATE or REPLACE PROCEDURE ThemThongTinTaiQuay(
     p_manhanvien VARCHAR2,
@@ -437,6 +438,7 @@ END;
 /
 select * FROM khachhang;
 select * from datphong;
+select * from chitietphong;
 -- giai thich: vua tao 1 khach hang moi, dong thoi dat 1 phong cho họ, nen, demo bang viec hien thi 2 bang kh va DP
 
 
@@ -517,7 +519,7 @@ end;
 
 select * from khachhang;
 select * from datphong;
-
+select * from THONGTINPHONG;
 
 -- tao 1 view de xem thong tin tat ca khah, muc dich la de truy van tu view
 -- de xem khach con dang dung dich vu hay khach dat truoc nhung chua toi
@@ -663,6 +665,7 @@ END CapNhatTongTienDatPhong;
 
 ---tao 1 bang hoa don moi
 create TABLE hoadon(
+    mahoadon VARCHAR2(10) PRIMARY KEY,
     makhachhang VARCHAR2(20),
     tenkhachhang VARCHAR(20),
     hokhachhang varchar(20),
@@ -694,7 +697,6 @@ CREATE OR REPLACE PROCEDURE CheckOut(p_madatphong VARCHAR2, p_phuongthucthanhtoa
         FROM ThongTinKhachHang
         WHERE madatphong = p_madatphong;
 BEGIN
-    -- Gọi thủ tục tính tổng tiền
     CapNhatTongTienDatPhong(p_madatphong);
     -- Update phương thức thanh toán, (lưu ý, phương thức thanh toán phải là 'card', 'cash', hoặc 'transfer')
     UPDATE datphong
@@ -707,7 +709,30 @@ BEGIN
     FOR cur_row IN cur_ThongTinKhachHang
     LOOP
         -- Chèn thông tin vào bảng hoadon cho mỗi hàng
-        INSERT INTO hoadon VALUES (
+        INSERT INTO hoadon (
+            mahoadon,
+            makhachhang,
+            tenkhachhang,
+            hokhachhang,
+            diachikhachhang,
+            cccd,
+            SODIENTHOAIKHACHHANG,
+            MADATPHONG,
+            ngaydatphong,
+            songayo,
+            checkindate,
+            checkoutdate,
+            phuongthucthanhtoan,
+            coc,
+            maphong,
+            loaiphong,
+            madichvu,
+            tendichvu,
+            soluong,
+            tongtien
+        )
+        VALUES (
+            'HD'||LPAD(SEQ_MAHOADON.NEXTVAL, 5, '0'),
             cur_row.makhachhang,
             cur_row.tenkhachhang,
             cur_row.hokhachhang,
