@@ -7,6 +7,7 @@ drop table ctgg;
 drop table loaiphong;
 drop table khachhang;
 drop table nhanvien;
+drop table hoadon;
 
 alter sequence SEQ_MACHITIETPHONG restart;
 alter sequence SEQ_MAKHACHHANG restart;
@@ -603,6 +604,21 @@ BEGIN
     END IF;
 END YesNo;
 /
+
+
+CREATE OR REPLACE PROCEDURE ThemDichVu (
+    p_madatphong VARCHAR2,
+    p_madichvu VARCHAR2,
+    p_SOLUONG NUMBER
+) IS
+BEGIN
+    INSERT INTO CHITIETDICHVU (machitietdichvu, MADICHVU, MADATPHONG, SOLUONG)
+        VALUES ('CTDV'||LPAD(SEQ_MACHITIETDICHVU.NEXTVAL, 5, '0'), p_madichvu, p_madatphong, p_soluong);
+end ThemDichVu;
+/
+--
+EXECUTE THEMDICHVU('DP00005','MS',1);
+select * from CHITIETDICHVU;
 ---Ham them dich vu, co the them nhieu dich vu, ma dat phong phai tu nhap vao (HAM NAY KO STORED DUOC)
 CREATE OR REPLACE PROCEDURE ThemNhieuDichVu AS
     v_luachon VARCHAR2(5);
@@ -611,15 +627,14 @@ CREATE OR REPLACE PROCEDURE ThemNhieuDichVu AS
     v_soluong NUMBER;
 BEGIN
     LOOP
+        v_madatphong := '&madatphong';
         v_madichvu := '&p_madichvu';
         v_soluong := TO_NUMBER('&p_soluong');
-        v_madatphong := '&madatphong';
         -- Call the ThemDichVu procedure
         ThemDichVu(v_madatphong, v_madichvu, v_soluong);
-
+        COMMIT;
         -- Ask if the user wants to add more services
         v_luachon := '&luachon';
-
         IF YesNo(v_luachon) = FALSE THEN
             EXIT; -- Exit the loop if the user doesn't want to add more services
         END IF;
@@ -628,7 +643,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Quá trình thêm dịch vụ đã kết thúc.');
 END ThemNhieuDichVu;
 /
-
+select * from CHITIETDICHVU;
 -- Hàm tính tổng tiền cho khách, sẽ được dùng trong hàm check out cùng với cập nhật PHUONGTHUCTHANHTOAN
 CREATE OR REPLACE PROCEDURE CapNhatTongTienDatPhong(p_madatphong VARCHAR2) IS
     v_tongtien INT;
@@ -665,7 +680,7 @@ END CapNhatTongTienDatPhong;
 
 ---tao 1 bang hoa don moi
 create TABLE hoadon(
-    mahoadon VARCHAR2(10) PRIMARY KEY,
+    mahoadon VARCHAR2(10) not null,
     makhachhang VARCHAR2(20),
     tenkhachhang VARCHAR(20),
     hokhachhang varchar(20),
@@ -685,39 +700,33 @@ create TABLE hoadon(
     tendichvu VARCHAR(20),
     soluong NUMBER,
     tongtien FLOAT
-)
+);
 
 --Thủ tục updatetong tien thường ko được dùng 1 mình mà sẽ dùng trong thủ tục checkout
 --thu tuc check out gom : update tong tien cho bang datphong, sau do dung view thong tin phong de lay thong tin
 --roi lai insert nguoc sang hoadon
 CREATE OR REPLACE PROCEDURE CheckOut(p_madatphong VARCHAR2, p_phuongthucthanhtoan VARCHAR2) IS
     cur_row ThongTinKhachHang%ROWTYPE;
-    CURSOR cur_ThongTinKhachHang IS
-        SELECT *
-        FROM ThongTinKhachHang
-        WHERE madatphong = p_madatphong;
 BEGIN
     CapNhatTongTienDatPhong(p_madatphong);
     -- Update phương thức thanh toán, (lưu ý, phương thức thanh toán phải là 'card', 'cash', hoặc 'transfer')
     UPDATE datphong
-    SET phuongthucthanhtoan = lower(p_phuongthucthanhtoan)
+    SET phuongthucthanhtoan = p_phuongthucthanhtoan
     WHERE madatphong = p_madatphong;
-
-    OPEN cur_ThongTinKhachHang;
     
-    -- Lặp qua tất cả các hàng
-    FOR cur_row IN cur_ThongTinKhachHang
+    FOR cur_row IN (SELECT *
+                    FROM ThongTinKhachHang
+                    WHERE madatphong = p_madatphong)
     LOOP
-        -- Chèn thông tin vào bảng hoadon cho mỗi hàng
         INSERT INTO hoadon (
             mahoadon,
-            MADATPHONG,
             makhachhang,
             tenkhachhang,
             hokhachhang,
             diachikhachhang,
             cccd,
             SODIENTHOAIKHACHHANG,
+            MADATPHONG,
             ngaydatphong,
             songayo,
             checkindate,
@@ -733,18 +742,18 @@ BEGIN
         )
         VALUES (
             'HD'||LPAD(SEQ_MAHOADON.NEXTVAL, 5, '0'),
-            cur_row.madatphong,
             cur_row.makhachhang,
             cur_row.tenkhachhang,
             cur_row.hokhachhang,
             cur_row.diachikhachhang,
             cur_row.cccd,
             cur_row.sodienthoaikhachhang,
+            cur_row.madatphong,
             cur_row.ngaydatphong,
             cur_row.songayo,
             cur_row.checkindate,
             cur_row.checkoutdate,
-            lower(p_phuongthucthanhtoan),
+            p_phuongthucthanhtoan,
             cur_row.coc,
             cur_row.maphong,
             cur_row.loaiphong,
@@ -755,14 +764,15 @@ BEGIN
         );
     END LOOP;
 
-    -- Đóng con trỏ
-    CLOSE cur_ThongTinKhachHang;
-
     COMMIT;
 END CheckOut;
 /
 
 
+--test hoadon
 
 
+EXECUTE CHECKOUT('DP00005','cash');
 
+select * from hoadon;
+select * from THONGTINKHACHHANG;
