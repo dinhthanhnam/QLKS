@@ -1,6 +1,6 @@
 
 create TABLE hoadon(
-    MAHOADON varchar2(20),
+    MAHOADON varchar2(20) primary KEY,
     MADATPHONG varchar(10),
     makhachhang VARCHAR2(20),
     tenkhachhang VARCHAR(20),
