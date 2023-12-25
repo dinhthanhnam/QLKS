@@ -643,6 +643,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Quá trình thêm dịch vụ đã kết thúc.');
 END ThemNhieuDichVu;
 /
+
 select * from CHITIETDICHVU;
 -- Hàm tính tổng tiền cho khách, sẽ được dùng trong hàm check out cùng với cập nhật PHUONGTHUCTHANHTOAN
 CREATE OR REPLACE PROCEDURE CapNhatTongTienDatPhong(p_madatphong VARCHAR2) IS
@@ -713,7 +714,7 @@ BEGIN
     UPDATE datphong
     SET phuongthucthanhtoan = p_phuongthucthanhtoan
     WHERE madatphong = p_madatphong;
-    
+
     FOR cur_row IN (SELECT *
                     FROM ThongTinKhachHang
                     WHERE madatphong = p_madatphong)
