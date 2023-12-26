@@ -589,23 +589,6 @@ select * from ViewPhongTrong;
 
 
 --Them nhieu dich vu
--- Phai tao 1 ham yes no, de quy doi Yes, Y -> True, va No, N -> False
-CREATE OR REPLACE FUNCTION YesNo(f_giaTri VARCHAR2) RETURN BOOLEAN IS
-BEGIN
-    -- Kiểm tra giá trị của tham số và trả về BOOLEAN tương ứng
-    IF UPPER(f_giaTri) IN ('YES', 'Y') THEN
-        RETURN TRUE;
-    ELSIF UPPER(f_giaTri) IN ('NO', 'N') THEN
-        RETURN FALSE;
-    ELSE
-        -- Nếu giá trị không hợp lệ, có thể xử lý tùy thuộc vào yêu cầu của bạn
-        -- Ví dụ: có thể trả về giá trị mặc định, raise exception, hoặc làm điều gì đó khác
-        RAISE_APPLICATION_ERROR(-20001, 'Giá trị không hợp lệ. Nhập vào "yes", "no", "y", hoặc "n".');
-    END IF;
-END YesNo;
-/
-
-
 CREATE OR REPLACE PROCEDURE ThemDichVu (
     p_madatphong VARCHAR2,
     p_madichvu VARCHAR2,
@@ -616,7 +599,7 @@ BEGIN
         VALUES ('CTDV'||LPAD(SEQ_MACHITIETDICHVU.NEXTVAL, 5, '0'), p_madichvu, p_madatphong, p_soluong);
 end ThemDichVu;
 /
-select * from chitietdichvu;
+
 ---Ham them dich vu, co the them nhieu dich vu, ma dat phong phai tu nhap vao (HAM NAY KO STORED DUOC)
 --type cho chi tiết dịch vụ
 CREATE TYPE CHITIETDICHVU_type AS OBJECT (
@@ -721,7 +704,7 @@ CREATE OR REPLACE PROCEDURE CheckOut(p_madatphong VARCHAR2, p_phuongthucthanhtoa
     cur_row ThongTinKhachHang%ROWTYPE;
     v_mahoadon hoadon.mahoadon%TYPE;
 BEGIN
-    v_mahoadon := 'HD'||LPAD(SEQ_MACHITIETDICHVU.NEXTVAL, 5, '0');
+    v_mahoadon := 'HD'||LPAD(SEQ_MAHOADON.NEXTVAL, 5, '0');
     CapNhatTongTienDatPhong(p_madatphong);
     -- Update phương thức thanh toán, (lưu ý, phương thức thanh toán phải là 'card', 'cash', hoặc 'transfer')
     UPDATE datphong
@@ -790,3 +773,4 @@ EXECUTE CHECKOUT('DP00005','cash');
 
 select * from hoadon;
 select * from THONGTINKHACHHANG;
+delete from hoadon;
