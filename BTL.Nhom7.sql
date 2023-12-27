@@ -316,8 +316,10 @@ BEGIN
 END ThemNhanVien;
 /
 
-EXECUTE ThemNhanVien('Ngan', 'Ha', 'Le tan', 'Ha Noi', '0987124141');
-
+BEGIN
+    ThemNhanVien('Ngan', 'Ha', 'Le tan', 'Ha Noi', '0987124141');
+END;
+/
 
 select * from NHANVIEN;
 
@@ -354,7 +356,10 @@ BEGIN
 END ThemKhachHang;
 /
 
-EXECUTE ThemKhachHang('Trang', 'Nguyen Thi', '0219546133', '038045613144', 'Ha Noi', '');
+BEGIN
+    ThemKhachHang('Trang', 'Nguyen Thi', '0219546133', '038045613144', 'Ha Noi', '');
+END;
+/
 
 select * from khachhang;
 
@@ -394,8 +399,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Bản ghi đã được thêm thành công.');
 END ThemDatPhong;
 /
-
-EXECUTE ThemDatPhong('NV0004', 'KH00001', 1, '26-DEC-2023');
+BEGIN
+    ThemDatPhong('NV0004', 'KH00001', 1, '26-DEC-2023');
+END;
+/
 
 SELECT * from datphong;
 
@@ -504,8 +511,6 @@ END ThemThongTinKhachDatTruoc;
 EXECUTE ThemThongTinKhachDatTruoc('NV0005', 'Nghia', 'The', '0923714345', '092123943145', 'P13', '26-dec-2024',1);
 
 select * FROM THONGTINKHACHHANG;
-
-
 CREATE OR REPLACE PROCEDURE CheckIn (
     p_cccd VARCHAR2,
     p_madatphong varchar2,
@@ -852,3 +857,167 @@ EXECUTE CHECKOUT('DP00005', 'cash', '');
 
 select * from hoadon;
 
+-- truy van SQL
+-- Truy vấn những khách hàng quay lại từ 2 lần trở lên
+SELECT
+    kh.makhachhang,
+    kh.ten,
+    kh.ho,
+    kh.DIACHI,
+    kh.cccd,
+    kh.SODIENTHOAI,
+    kh.sothenganhang,
+    COUNT(dp.madatphong) AS soLanDatPhong
+FROM
+    khachhang kh
+JOIN
+    datphong dp ON kh.makhachhang = dp.makhachhang
+GROUP BY
+    kh.makhachhang, kh.ten, kh.ho, kh.DIACHI, kh.cccd, kh.SODIENTHOAI, kh.sothenganhang
+HAVING
+    COUNT(dp.madatphong) >= 2;
+
+
+-- Truy vấn các dịch vụ được sử dụng nhiều nhất trong tháng
+WITH SuDungDichVu AS (
+    SELECT
+        dv.MaDichVu,
+        dv.TenDichVu,
+        SUM(cd.SoLuong) AS TongSoLuongSuDung
+    FROM
+        DichVu dv
+    JOIN
+        ChiTietDichVu cd ON dv.MaDichVu = cd.MaDichVu
+    JOIN
+        DatPhong dp ON cd.MaDatPhong = dp.MaDatPhong
+    WHERE
+        EXTRACT(MONTH FROM dp.NgayDatPhong) = EXTRACT(MONTH FROM SYSDATE)
+    GROUP BY
+        dv.MaDichVu, dv.TenDichVu
+)
+SELECT
+    MaDichVu,
+    TenDichVu,
+    TongSoLuongSuDung
+FROM
+    SuDungDichVu
+WHERE
+    TongSoLuongSuDung = (SELECT MAX(TongSoLuongSuDung) FROM SuDungDichVu);
+
+
+--Truy vấn phòng đc đặt nhiều nhất trong tháng
+WITH PhongDuocDatNhieuNhat AS (
+    SELECT
+        p.maphong,
+        COUNT(cp.madatphong) AS SoLanDat
+    FROM
+        phong p
+    JOIN
+        chitietphong cp ON p.maphong = cp.maphong
+    JOIN
+        datphong dp ON cp.madatphong = dp.madatphong
+    WHERE
+        EXTRACT(MONTH FROM dp.ngaydatphong) = EXTRACT(MONTH FROM SYSDATE)
+    GROUP BY
+        p.maphong
+)
+SELECT
+    p.maphong,
+    p.sophong,
+    pdn.SoLanDat
+FROM
+    phong p
+LEFT JOIN
+    PhongDuocDatNhieuNhat pdn ON p.maphong = pdn.maphong
+WHERE
+    pdn.SoLanDat = (SELECT MAX(SoLanDat) FROM PhongDuocDatNhieuNhat);
+
+
+--. Truy vấn những phòng không được giảm giá trong thời gian hiện tại
+SELECT *
+FROM ThongTinPhong
+WHERE TILETRIETKHAU = 0;
+-- Truy vấn tổng doanh thu trong tháng hiện tại
+SELECT
+    SUM(tongtien) AS doanhthu
+FROM (
+    SELECT DISTINCT mahoadon, tongtien
+    FROM hoadon
+    WHERE EXTRACT(MONTH FROM checkoutdate) = EXTRACT(MONTH FROM SYSDATE)
+);
+
+-- Truy vấn tổng doanh thu của từng loại dịch vụ trong tháng
+SELECT
+    dv.madichvu,
+    dv.tendichvu,
+    SUM(dv.gia * hd.soluong) AS doanhthu_thang
+FROM
+    dichvu dv
+JOIN
+    hoadon hd ON dv.madichvu = hd.madichvu
+WHERE
+    EXTRACT(MONTH FROM hd.checkoutdate) = EXTRACT(MONTH FROM SYSDATE)
+GROUP BY
+    dv.madichvu, dv.tendichvu;
+
+-- Truy vấn khách hàng sử dụng dịch vụ nhiều nhất
+WITH RankedCustomers AS (
+    SELECT
+        makhachhang,
+        tenkhachhang,
+        hokhachhang,
+        madatphong,
+        COALESCE(SUM(soluong), 0) AS tong_soluong_dichvu,
+        RANK() OVER (ORDER BY COALESCE(SUM(soluong), 0) DESC, makhachhang) AS customer_rank,
+        DENSE_RANK() OVER (ORDER BY COALESCE(SUM(soluong), 0) DESC, makhachhang) AS customer_dense_rank
+    FROM
+        ThongTinKhachHang
+    GROUP BY
+        makhachhang, tenkhachhang, hokhachhang, madatphong
+)
+SELECT
+    makhachhang,
+    tenkhachhang,
+    hokhachhang,
+    madatphong,
+    tong_soluong_dichvu
+FROM
+    RankedCustomers
+WHERE
+    customer_rank = 1 OR customer_dense_rank = 1;
+
+-- Truy vấn những khách hàng mới trong tháng
+SELECT
+    EXTRACT(MONTH FROM checkoutdate) AS thang,
+    COUNT(madatphong) AS soluongdatphong
+FROM
+    datphong
+WHERE
+    EXTRACT(MONTH FROM checkoutdate) = EXTRACT(MONTH FROM SYSDATE)
+GROUP BY
+    EXTRACT(MONTH FROM checkoutdate)
+ORDER BY
+    thang;
+
+-- Truy vấn đưa ra tổng số lượt đặt và sử dụng phòng trong tháng
+SELECT
+    kh1.makhachhang,
+    kh1.ten AS tenkhachhang,
+    kh1.ho AS hokhachhang,
+    kh1.cccd,
+    MIN(dp.ngaydatphong) AS ngaydatphong
+FROM
+    khachhang kh1
+JOIN
+    datphong dp ON kh1.makhachhang = dp.makhachhang
+WHERE
+    NOT EXISTS (
+        SELECT 1
+        FROM khachhang kh2
+        WHERE kh2.cccd = kh1.cccd
+        AND kh2.makhachhang <> kh1.makhachhang
+    )
+GROUP BY
+    kh1.makhachhang, kh1.ten, kh1.ho, kh1.cccd
+ORDER BY
+    MIN(dp.ngaydatphong);
